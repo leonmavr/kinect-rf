@@ -32,47 +32,45 @@ def draw_bbox(event, x, y, flags, param):
         cv2.imshow(win_title, img)
 
 
-def annotate_images(image_folder, output_file):
+def annotate_images(img_folder):
     global img
 
-    with open(output_file, 'w') as f:
-        for image_name in sorted(os.listdir(image_folder)):
-            image_path = os.path.join(image_folder, image_name)
-            img = cv2.imread(image_path)
+    for image_name in sorted(os.listdir(img_folder)):
+        image_path = os.path.join(img_folder, image_name)
+        img = cv2.imread(image_path)
 
-            if img is None:
-                continue
-            img_height, img_width = img.shape[:2]
-            label_image = np.zeros(img.shape[:2], np.uint8)
-            print(label_image.shape)
+        if img is None:
+            continue
+        img_height, img_width = img.shape[:2]
+        label_image = np.zeros(img.shape[:2], np.uint8)
+        print(label_image.shape)
 
-            cv2.imshow(win_title, img)
-            cv2.setMouseCallback(win_title, draw_bbox)
-            print(f"Annotating {image_name}... Press 'n' to move to the next image or 'q' to quit.")
-            key = cv2.waitKey(0) & 0xFF
+        cv2.imshow(win_title, img)
+        cv2.setMouseCallback(win_title, draw_bbox)
+        print(f"Annotating {image_name}... Press 'n' to move to the next image or 'q' to quit.")
+        key = cv2.waitKey(0) & 0xFF
 
-            for i, box in enumerate(boxes):
-                # first the head, then the hands:
-                if i == 0:
-                    label_val = lbl_head 
-                else:
-                    label_val = lbl_hands
-                x0, y0, x1, y1 = box
-                x0, y0, x1, y1 = int(x0), int(y0), int(x1), int(y1)
-                w = abs(x1 - x0)
-                h = abs(y1 - y0)
-                label_image[y0:y0+h, x0:x0+w] = label_val
-            # reset for the next image
-            boxes.clear()
-            cv2.imwrite('./labelled/%s' % image_name.replace('depth', 'lbl'), label_image)
-            if key == ord('q'):
-                break
-            elif key == ord('n'):
-                continue
+        for i, box in enumerate(boxes):
+            # first the head, then the hands:
+            if i == 0:
+                label_val = lbl_head 
+            else:
+                label_val = lbl_hands
+            x0, y0, x1, y1 = box
+            x0, y0, x1, y1 = int(x0), int(y0), int(x1), int(y1)
+            w = abs(x1 - x0)
+            h = abs(y1 - y0)
+            label_image[y0:y0+h, x0:x0+w] = label_val
+        # reset for the next image
+        boxes.clear()
+        cv2.imwrite('./labelled/%s' % image_name.replace('depth', 'lbl'), label_image)
+        if key == ord('q'):
+            break
+        elif key == ord('n'):
+            continue
     cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
-    image_folder = './depth/'
-    output_file = 'bounding_boxes.txt'
-    annotate_images(image_folder, output_file)
+    img_folder = './depth/'
+    annotate_images(img_folder)
