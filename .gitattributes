@@ -1,0 +1,2 @@
+*.clf filter=lfs diff=lfs merge=lfs -text
+clf/*.clf filter=lfs diff=lfs merge=lfs -text
