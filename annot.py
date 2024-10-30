@@ -1,11 +1,12 @@
 import cv2
 import os
 import numpy as np
+import glob
 
 ### Instructions
 # 1. Hold left click to draw a bounding box around the head, THEN the hands
 # 2. Press 'n' to jump to the next image or 'q' to quit
-# 3. Results will be saved in directory `labelled`
+# 3. Results will be saved in directory `dir_labels`
 
 drawing = False  # true if the mouse is pressed
 ix, iy = -1, -1  # initial position of the mouse
@@ -13,6 +14,8 @@ boxes = []  # store bounding boxes
 lbl_head = 1
 lbl_hands = 2
 win_title = 'first the head, then hands'
+dir_labels = 'labelled'
+dir_depth = 'depth'
 
 
 def draw_bbox(event, x, y, flags, param):
@@ -34,6 +37,14 @@ def draw_bbox(event, x, y, flags, param):
 
 def annotate_images(img_folder):
     global img
+    # clean up
+    os.makedirs(dir_labels, exist_ok=True)
+    png_labelled = glob.glob(os.path.join(dir_labels, '*.png'))
+    jpg_labelled = glob.glob(os.path.join(dir_labels, '*.jpg'))
+    for f in png_labelled:
+        os.remove(f)
+    for f in jpg_labelled:
+        os.remove(f)
 
     for image_name in sorted(os.listdir(img_folder)):
         image_path = os.path.join(img_folder, image_name)
@@ -63,14 +74,13 @@ def annotate_images(img_folder):
             label_image[y0:y0+h, x0:x0+w] = label_val
         # reset for the next image
         boxes.clear()
-        cv2.imwrite('./labelled/%s' % image_name.replace('depth', 'lbl'), label_image)
         if key == ord('q'):
             break
         elif key == ord('n'):
             continue
+        cv2.imwrite(os.path.join(dir_labels, image_name.replace('depth', 'lbl')) , label_image)
     cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
-    img_folder = './depth/'
-    annotate_images(img_folder)
+    annotate_images(dir_depth)
