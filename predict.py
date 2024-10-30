@@ -1,10 +1,10 @@
+from features import extract_features
 import cv2
 import numpy as np
 import pickle
 import sys
 
-
-def extract_features(img: np.ndarray):
+def extract_features_prediction(img: np.ndarray):
     h, w = img.shape
     features = []
     positions = []
@@ -23,7 +23,7 @@ def predict_pixels(clf, img_depth: np.ndarray) -> np.ndarray:
     # downsample by 2 because features are computed this way
     resized_image = cv2.resize(img_depth, (img_depth.shape[1] // 2, img_depth.shape[0] // 2))
     # extract features
-    X_new, positions = extract_features(img_depth)
+    X_new, positions = extract_features_prediction(img_depth)
     # predict the labels for each pixel
     y_pred = clf.predict(X_new)
 
@@ -33,7 +33,7 @@ def predict_pixels(clf, img_depth: np.ndarray) -> np.ndarray:
         img_labels[i, j] = y_pred[idx]*100
     return img_labels
 
-
+'''
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print("Usage: python <this_program.py> <classifier.clf> <depth_image.png>")
@@ -49,3 +49,4 @@ if __name__ == '__main__':
     cv2.imshow('predicted labels', img_predicted)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+'''
