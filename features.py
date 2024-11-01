@@ -37,7 +37,7 @@ def extract_features(img, label_img=None, resize_factor=0.1, mask_size=11):
                 ni, nj = i + u, j + v
                 # Ensure offsets are within bounds
                 if 0 <= ni < h and 0 <= nj < w:
-                    depth_diffs.append(abs(img[ni, nj] - depth_origin))
+                    depth_diffs.append(img[ni, nj] - depth_origin)
                 else:
                     depth_diffs.append(0)  # If out of bounds, use 0 as a fallback
 
