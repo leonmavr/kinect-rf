@@ -23,7 +23,7 @@ def find_bboxes(img: np.ndarray) -> List[NamedTuple]:
     head_mask = cv2.inRange(img, np.array(head_intensity),\
         np.array(head_intensity))
     # and refine them, e.g. close gaps and smoothen borders
-    kernel = np.ones((7, 7), np.uint8)
+    kernel = np.ones((13, 13), np.uint8)
     hand_closed = cv2.morphologyEx(hand_mask, cv2.MORPH_CLOSE, kernel)
     head_closed = cv2.morphologyEx(head_mask, cv2.MORPH_CLOSE, kernel)
 
@@ -47,7 +47,7 @@ def find_bboxes(img: np.ndarray) -> List[NamedTuple]:
     return ret
 
 
-def draw_bboxes(img, bboxes, delay=0, show=False):
+def draw_bboxes(img, bboxes, delay=0, show=False) -> np.ndarray:
     if len(img.shape) == 2:
         ret = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     else:
