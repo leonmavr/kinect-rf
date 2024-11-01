@@ -15,10 +15,8 @@ if __name__ == '__main__':
     X, y = [], []
     for fdepth, flabel in zip(sorted(os.listdir('depth')),\
                               sorted(os.listdir('labelled'))):
-        depth = cv2.imread('depth' + os.sep + fdepth, cv2.IMREAD_GRAYSCALE)
-        lbl = cv2.imread('labelled' + os.sep + flabel, cv2.IMREAD_GRAYSCALE)
-        depth = cv2.resize(depth, (depth.shape[1] // 2, depth.shape[0] // 2))
-        lbl = cv2.resize(lbl, (lbl.shape[1] // 2, lbl.shape[0] // 2))
+        depth = cv2.imread(os.path.join('depth', fdepth), cv2.IMREAD_GRAYSCALE)
+        lbl = cv2.imread(os.path.join('labelled', flabel), cv2.IMREAD_GRAYSCALE)
         XX, yy = extract_features(depth, lbl)
         X.append(XX)
         y.append(yy)
@@ -35,10 +33,10 @@ if __name__ == '__main__':
 
     # evaluate performance
     accuracy = clf.score(X_test, y_test)
-    print(f"Model Accuracy: {accuracy:.2f}")
+    print(f"Model accuracy: {accuracy:.2f}")
 
     # dump output file
     clf_file = 'rf_head_hands.clf'
     with open(clf_file, 'wb') as f:
         pickle.dump(clf, f)
-    print(f"Classifier saved at {clf_file}")
+    print(f"Classifier saved as {clf_file}")

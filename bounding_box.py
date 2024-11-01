@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from collections import namedtuple
 from typing import NamedTuple, List
+import sys
 
 BoundingBox = namedtuple('BoundingBox', ['x0', 'y0', 'x1', 'y1'])
 
@@ -46,22 +47,19 @@ def find_bboxes(img: np.ndarray) -> List[NamedTuple]:
     return ret
 
 
-def draw_bboxes(img, bboxes, delay=0):
+def draw_bboxes(img, bboxes, delay=0, show=False):
     if len(img.shape) == 2:
-        output = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+        ret = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     else:
-        output = img.copy().copy()
+        ret = img.copy().copy()
     for i, bbox in enumerate(bboxes):
         x0, y0, x1, y1 = bbox
         if i == 0: # blue for head
             color = (255, 0, 0)
         else: # green for hands
             color = (0, 255, 0)
-        cv2.rectangle(output, (x0, y0), (x1,y1), color, 2)
-    cv2.imshow("Bounding boxes", output)
-    cv2.waitKey(delay)
-
-#img = cv2.imread('predicted_label_image.png')
-#boxes = find_bboxes(img)
-#draw_bboxes(img, boxes)
-#cv2.destroyAllWindows()
+        cv2.rectangle(ret, (x0, y0), (x1,y1), color, 2)
+    if show:
+        cv2.imshow("Bounding boxes", ret)
+        cv2.waitKey(delay)
+    return ret 

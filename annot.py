@@ -35,16 +35,17 @@ def draw_bbox(event, x, y, flags, param):
         cv2.imshow(win_title, img)
 
 
-def annotate_images(img_folder):
+def annotate_images(img_folder, purge=True):
     global img
     # clean up
     os.makedirs(dir_labels, exist_ok=True)
-    png_labelled = glob.glob(os.path.join(dir_labels, '*.png'))
-    jpg_labelled = glob.glob(os.path.join(dir_labels, '*.jpg'))
-    for f in png_labelled:
-        os.remove(f)
-    for f in jpg_labelled:
-        os.remove(f)
+    if purge:
+        png_labelled = glob.glob(os.path.join(dir_labels, '*.png'))
+        jpg_labelled = glob.glob(os.path.join(dir_labels, '*.jpg'))
+        for f in png_labelled:
+            os.remove(f)
+        for f in jpg_labelled:
+            os.remove(f)
 
     for image_name in sorted(os.listdir(img_folder)):
         image_path = os.path.join(img_folder, image_name)
