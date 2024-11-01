@@ -1,14 +1,16 @@
 import cv2
 import numpy as np
 from collections import namedtuple
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Tuple
 import sys
 
 BoundingBox = namedtuple('BoundingBox', ['x0', 'y0', 'x1', 'y1'])
 
-def find_bboxes(img: np.ndarray) -> List[NamedTuple]:
+def find_bboxes(img: np.ndarray) -> Tuple[bool, List[NamedTuple]]:
+    # whether there are valid regions to detect
+    ret_valid = True
     # head and hands bounding boxes
-    ret: List[NamedTuple]  = []
+    ret_boxes: List[NamedTuple]  = []
     # find the two non-zero intensities in the histogram
     # the lower one will be the label value for the head and the higher for hands
     unique_vals = np.unique(img)
@@ -16,7 +18,9 @@ def find_bboxes(img: np.ndarray) -> List[NamedTuple]:
     if len(nonzero_vals) == 2:
         head_intensity, hand_intensity = sorted(nonzero_vals)
     else:
-        raise ValueError("Label image must contain exactly 2 non-zero intensities")
+        ret_valid = False
+        return ret_valid, ret_boxes
+        #raise ValueError("Label image must contain exactly 2 non-zero intensities")
     # create two binary masks - one for the head and one for hands 
     hand_mask = cv2.inRange(img, np.array(hand_intensity),\
         np.array(hand_intensity))
@@ -40,11 +44,11 @@ def find_bboxes(img: np.ndarray) -> List[NamedTuple]:
     # store and return bounding boxes
     for contour in head_contours:
         x, y, w, h = cv2.boundingRect(contour)
-        ret.append(BoundingBox(x, y, x+w, y+h)) 
+        ret_boxes.append(BoundingBox(x, y, x+w, y+h)) 
     for contour in hand_contours:
         x, y, w, h = cv2.boundingRect(contour)
-        ret.append(BoundingBox(x, y, x+w, y+h)) 
-    return ret
+        ret_boxes.append(BoundingBox(x, y, x+w, y+h)) 
+    return ret_valid, ret_boxes
 
 
 def draw_bboxes(img, bboxes, delay=0, show=False) -> np.ndarray:

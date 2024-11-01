@@ -22,7 +22,11 @@ if __name__ == '__main__':
         img_depth = cv2.cvtColor(img_depth, cv2.COLOR_BGR2GRAY)
         cv2.imshow('video', img_depth)
         img_predicted = predict(img_depth, clf)
-        boxes = find_bboxes(img_predicted)
+        valid_boxes, boxes = find_bboxes(img_predicted)
+        if not valid_boxes:
+            continue
+        #im_mask= img_predicted.copy().copy()
+        #cv2.imshow('mask', im_mask)
         img_predicted = draw_bboxes(img_depth, boxes)
         cv2.imshow('predicted labels', img_predicted)
         c = cv2.waitKey(33)
