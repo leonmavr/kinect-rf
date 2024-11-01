@@ -35,11 +35,11 @@ def extract_features(img, label_img=None, resize_factor=0.1, mask_size=11):
             depth_diffs = []
             for u, v in offsets:
                 ni, nj = i + u, j + v
-                # Ensure offsets are within bounds
+                # keep offsets within the border, else use 0 as fallback 
                 if 0 <= ni < h and 0 <= nj < w:
                     depth_diffs.append(img[ni, nj] - depth_origin)
                 else:
-                    depth_diffs.append(0)  # If out of bounds, use 0 as a fallback
+                    depth_diffs.append(0)
 
             # combine the depth at origin and depth differences into a feature vector
             feature_vector = np.hstack((depth_origin, depth_diffs))
