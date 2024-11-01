@@ -11,12 +11,15 @@ import pickle
 # 2. Store your sorted by name labelled images in directory `labelled` as lbl_%06d.png or lbl_%06d.jpg
 # 3. Run this script. It will save the classifier as a .pkl file
 
+dir_train = 'depth_train'
+dir_labels = 'labelled' 
+
 if __name__ == '__main__':
     X, y = [], []
-    for fdepth, flabel in zip(sorted(os.listdir('depth')),\
-                              sorted(os.listdir('labelled'))):
-        depth = cv2.imread(os.path.join('depth', fdepth), cv2.IMREAD_GRAYSCALE)
-        lbl = cv2.imread(os.path.join('labelled', flabel), cv2.IMREAD_GRAYSCALE)
+    for fdepth, flabel in zip(sorted(os.listdir(dir_train)),\
+                              sorted(os.listdir(dir_labels))):
+        depth = cv2.imread(os.path.join(dir_train, fdepth), cv2.IMREAD_GRAYSCALE)
+        lbl = cv2.imread(os.path.join(dir_labels, flabel), cv2.IMREAD_GRAYSCALE)
         XX, yy = extract_features(depth, lbl)
         X.append(XX)
         y.append(yy)
@@ -35,7 +38,7 @@ if __name__ == '__main__':
     accuracy = clf.score(X_test, y_test)
     print(f"Model accuracy: {accuracy:.2f}")
 
-    # dump output file
+    # dump trained classifier file
     clf_file = 'rf_head_hands.clf'
     with open(clf_file, 'wb') as f:
         pickle.dump(clf, f)

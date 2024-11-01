@@ -15,7 +15,7 @@ lbl_head = 1
 lbl_hands = 2
 win_title = 'first the head, then hands'
 dir_labels = 'labelled'
-dir_depth = 'depth'
+dir_depth = 'depth_train'
 
 
 def draw_bbox(event, x, y, flags, param):
