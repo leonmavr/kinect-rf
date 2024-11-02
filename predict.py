@@ -5,7 +5,7 @@ import pickle
 import sys
 
 
-def predict(img, clf, resize_factor=0.075, mask_size=9):
+def predict(img, clf, resize_factor=0.075, mask_size=11):
     preprocessed_img = feature_preprocess(img, resize_factor=resize_factor)
     h, w = preprocessed_img.shape
     features, _ = extract_features(img, resize_factor=resize_factor, mask_size=mask_size)

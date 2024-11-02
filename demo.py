@@ -5,10 +5,9 @@ import cv2
 import os
 import pickle
 
-cap = cv2.VideoCapture(0)
 
 if __name__ == '__main__':
-    clf_path = os.path.join('clf', 'rf_head_hands.clf')
+    clf_path = os.path.join('clf', 'rf_head_hands_02.clf')
     with open(clf_path, 'rb') as f:
         clf = pickle.load(f)
 
@@ -25,8 +24,6 @@ if __name__ == '__main__':
         valid_boxes, boxes = find_bboxes(img_predicted)
         if not valid_boxes:
             continue
-        #im_mask= img_predicted.copy().copy()
-        #cv2.imshow('mask', im_mask)
         img_predicted = draw_bboxes(img_depth, boxes)
         cv2.imshow('predicted labels', img_predicted)
         c = cv2.waitKey(33)

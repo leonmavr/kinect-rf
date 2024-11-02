@@ -35,7 +35,7 @@ def draw_bbox(event, x, y, flags, param):
         cv2.imshow(win_title, img)
 
 
-def annotate_images(img_folder, purge=True):
+def annotate_images(img_folder, purge=False):
     global img
     # clean up
     os.makedirs(dir_labels, exist_ok=True)

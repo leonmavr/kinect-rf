@@ -20,6 +20,8 @@ if __name__ == '__main__':
                               sorted(os.listdir(dir_labels))):
         depth = cv2.imread(os.path.join(dir_train, fdepth), cv2.IMREAD_GRAYSCALE)
         lbl = cv2.imread(os.path.join(dir_labels, flabel), cv2.IMREAD_GRAYSCALE)
+        if depth is None or lbl is None:
+            continue
         XX, yy = extract_features(depth, lbl)
         X.append(XX)
         y.append(yy)
