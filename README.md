@@ -113,6 +113,10 @@ Now for each annotated depth image, you will have one labelled one in directory
 python train_rf.py
 ```
 
+Training should only take approximately half a minute for ~20 training images.
+When it's done, the script will give you the filepath to the newly trained
+classifier.
+
 ### 3.3. Running the Demo and Visualising the Predictions
 
 You should have exported your classifier as a pickled file. If you don't want to
