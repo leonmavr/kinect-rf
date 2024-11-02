@@ -119,7 +119,7 @@ it computes the 24 differences between each intensity at each red dot and the
 intensity at the origin (green dot). The order is always as indicated by the
 arrows. Therefore each pixel in green can be described by a 24-length feature
 vector. Such vectors are fed to the Random Forest classifier, along with the
-labels.
+labels (0=background, 1=head, 2=hand).
 
 
 <img src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/feature_mask.png" alt="feature mask" style="width: 25%; height: auto;">
