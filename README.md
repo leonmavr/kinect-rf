@@ -20,9 +20,9 @@ pip install -r requirements.txt
 ### 2.2 Kernel Permissions
 
 You will need the `libfreenect` library, so find out how to install it for
-distribution.
+your distribution.
 
-Before connecting your Kinect, you will need to change the kernel's permission
+Before connecting your Kinect, you will need to change the kernel's permissions
 for the device:
 
 `sudo vi /etc/udev/rules.d/60-libfreenect.rules `
@@ -128,7 +128,7 @@ labels (0=background, 1=head, 2=hand).
   
 
   
-  <summary>(Click to show Tikz code for the image)</summary>
+  <summary>(Click to show the Tikz code for the image)</summary>
 
   ```
   \begin{tikzpicture}
