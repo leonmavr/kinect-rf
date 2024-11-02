@@ -120,10 +120,66 @@ intensity at the origin (green dot). The order is always the same and clockwise.
 Therefore each pixel will be described by a 28-length feature vector.
 
 
-<img
-src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/feature_mask.png"
-alt="feature mask" height="50%">
+<img src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/feature_mask.png" alt="feature mask" style="width: 25%; height: auto;">
 
+<details>
+  
+
+  
+  <summary>(Click to show Tikz code for the image)</summary>
+
+  ```
+  \begin{tikzpicture}
+    % grid dimensions
+    \def\rows{4}
+    \def\cols{4}
+    \def\step{1.5} % Distance between grid lines
+    
+    % draw the grid
+    \foreach \i in {0,...,\rows} {
+        \draw[very thin] (0, \i * \step) -- (\cols * \step, \i * \step); % Horizontal lines
+    }
+    \foreach \j in {0,...,\cols} {
+        \draw[very thin] (\j * \step, 0) -- (\j * \step, \rows * \step); % Vertical lines
+    }
+
+    % thicker outer and inner rings
+    \draw [ultra thick] (0,0) -- (4*\step,0) -- (4*\step,4*\step) -- (0,4*\step) -- (0,0);
+    \draw [ultra thick] (\step,\step) -- (3*\step,\step) -- (3*\step,3*\step) -- (\step,3*\step) -- (\step,\step);
+    % arrows to show the order of the features
+    \draw [-Latex,ultra thick] (\step,4*\step) -- (1.65*\step,4*\step);
+    \draw [Latex-,ultra thick] (4*\step,2.45*\step) -- (4*\step,4*\step);
+    \draw [-Latex,ultra thick] (3*\step,0) -- (2.45*\step,0);
+    \draw [-Latex,ultra thick] (0,\step) -- (0,1.65*\step);
+
+    \draw [-Latex,ultra thick] (\step,3*\step) -- (1.65*\step,3*\step);
+    \draw [Latex-,ultra thick] (3*\step,2.45*\step) -- (3*\step,3*\step);
+    \draw [-Latex,ultra thick] (3*\step,\step) -- (2.45*\step,\step);
+    \draw [-Latex,ultra thick] (\step,\step) -- (\step,1.65*\step);
+
+    \tikzset{
+        red sphere/.style={
+            ball color=red, circle, shading=ball, minimum size=6pt
+        },
+        green sphere/.style={
+            ball color=green, circle, shading=ball, minimum size=6pt
+        }
+    }
+    
+    \foreach \i in {0, 1, 2, 3, 4} {
+        \foreach \j in {0, 1, 2, 3, 4} {
+            \node[red sphere] at (\j * \step, \i * \step) {};
+        }
+    }
+    
+    % Green sphere at the center
+    \node[green sphere] at (2 * \step, 2 * \step) {};
+
+  \end{tikzpicture}
+
+  ```
+
+</details>
 
 Training should only take approximately half a minute on a CPU for ~20 training images.
 When it's done, the script will give you the filepath to the newly trained
