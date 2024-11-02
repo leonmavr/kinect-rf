@@ -113,11 +113,13 @@ Now for each annotated depth image, you will have one labelled one in directory
 python train_rf.py
 ```
 
-For the training, a simple feature extractor outline in `features.py` has been
-designed. This works based on a sliding mask and at each position of the block,
+For the training, a simple feature extractor defined in `features.py` has been
+designed. This works by sliding a fixed-sized mask over the downscaled image.
 it computes the 24 differences between each intensity at each red dot and the
-intensity at the origin (green dot). The order is always the same and clockwise.
-Therefore each pixel in green will be described by a 28-length feature vector.
+intensity at the origin (green dot). The order is always as indicated by the
+arrows. Therefore each pixel in green can be described by a 24-length feature
+vector. Such vectors are fed to the Random Forest classifier, along with the
+labels.
 
 
 <img src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/feature_mask.png" alt="feature mask" style="width: 25%; height: auto;">
