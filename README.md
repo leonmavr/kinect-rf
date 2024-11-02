@@ -113,7 +113,7 @@ Now for each annotated depth image, you will have one labelled one in directory
 python train_rf.py
 ```
 
-Training should only take approximately half a minute for ~20 training images.
+Training should only take approximately half a minute on a CPU for ~20 training images.
 When it's done, the script will give you the filepath to the newly trained
 classifier.
 
