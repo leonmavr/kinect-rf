@@ -125,4 +125,4 @@ clf_path = os.path.join('clf', 'rf_head_hands_02.clf')
 Then you can run the demo, which will draw a blue bounding box around the head
 and two green ones around the hands.
 
-<img src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/demo_screenshot.png" alt="demo screenshot" height="360">
+<img src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/demo_screenshot.png" alt="demo screenshot" height="230">
