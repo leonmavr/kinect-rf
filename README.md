@@ -113,6 +113,18 @@ Now for each annotated depth image, you will have one labelled one in directory
 python train_rf.py
 ```
 
+For the training, a simple feature extractor outline in `features.py` has been
+designed. This works based on a sliding mask and at each position of the block,
+it computes the 24 differences between each intensity at each red dot and the
+intensity at the origin (green dot). The order is always the same and clockwise.
+Therefore each pixel will be described by a 28-length feature vector.
+
+
+<img
+src="https://raw.githubusercontent.com/leonmavr/kinect-rf/refs/heads/master/assets/feature_mask.png"
+alt="feature mask" height="50%">
+
+
 Training should only take approximately half a minute on a CPU for ~20 training images.
 When it's done, the script will give you the filepath to the newly trained
 classifier.
