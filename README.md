@@ -117,8 +117,9 @@ For the training, a simple feature extractor defined in `features.py` has been
 designed. This works by sliding a fixed-sized mask over the downscaled image.
 it computes the 24 differences between each intensity at each red dot and the
 intensity at the origin (green dot). The order is always as indicated by the
-arrows. Therefore each pixel in green can be described by a 24-length feature
-vector. Such vectors are fed to the Random Forest classifier, along with the
+arrows. Apart from the differences, the intensity of the origin (green) is also
+stored in the feature vector. So we end up with a 25-vector for eahc pixel's 
+features. Such vectors are fed to the Random Forest classifier, along with the
 labels (0=background, 1=head, 2=hand).
 
 
